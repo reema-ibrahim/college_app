@@ -3,9 +3,7 @@ import streamlit as st
 import numpy as np
 
 # CONSTANTS 
-"""
-TODO: make constants capital letters
-"""
+# TODO: make constants capital letters
 DB_PATH = 'college_db.csv'
 places = {
   'pacific west': (41.852892, -117.15689),
@@ -42,9 +40,7 @@ changed = pd.read_csv(DB_PATH)
 
 changed = changed.drop(labels=['in state cost', '1st industry', '2nd industry','3rd industry', '4th industry', '5th industry', 'median earning wages', 'retention rate', 'student to faculty ratio'], axis=1)
 
-"""
-TODO: put all helper functions in additional python file
-"""
+# TODO: put all helper functions in additional python file
 
 def c_distance(d, e, f, g):
       d=d*np.pi/180
@@ -58,9 +54,8 @@ def my_mapping_function(r, in_min, in_max):
   out_max = 100
   return (r - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
-"""
-TODO: add title too the website!
-"""
+# TODO: add title too the website!
+
 with st.form('CollegeForm'):
   user_act_score = st.slider(label='ACT Score', min_value=1, max_value=36, key=1)
   user_act_weight = st.slider(label='ACT Weight', min_value=0, max_value=10, key=2)
@@ -98,9 +93,7 @@ if submitted2:
                                     other=(user_act_score/changed["averageact"])*100, inplace=True)
 
 
-  """
-  TODO: remove all commented code from repo
-  """
+  # TODO: remove all commented code from repo
   # changed["outofstatecost"].where(~(changed.outofstatecost <= user_cost_preference_min_choice),
   #                                       other=0, inplace=True)
   # changed["outofstatecost"].where(~(changed.outofstatecost >= user_cost_preference_max_choice),
@@ -128,9 +121,7 @@ if submitted2:
   #                                       other=0, inplace=True)
 
 
-  """
-  TODO: put with other helper functions
-  """
+  # TODO: put with other helper functions
   def majors_function(collegename):
     majors=changed[changed["name"]==collegename]["majors"].apply(lambda x: x.split("\n"))
     for major in majors: 
@@ -152,12 +143,8 @@ if submitted2:
 
 
 
-  """
-  TODO: change so that the output either brings you to a new page, like the form disapppears...or you have a modal that pops up with the results
-  """
-  """
-  TODO: change styling for ouput, and also add a prompt like "your best college reccommendations are...", etc.
-  """
+#  TODO: change so that the output either brings you to a new page, like the form disapppears...or you have a modal that pops up with the results
+#  TODO: change styling for ouput, and also add a prompt like "your best college reccommendations are...", etc.
 
   final_df=changed[changed[user_major_choice]==1]
 
