@@ -59,14 +59,14 @@ def my_mapping_function(r, in_min, in_max):
 with st.form('CollegeForm'):
   user_act_score = st.slider(label='ACT Score', min_value=1, max_value=36, key=1)
   user_act_weight = st.slider(label='ACT Weight', min_value=0, max_value=10, key=2)
-  user_undergraduate_enrollment_choice = st.slider(label='Undergrad Enrollment Size', min_value=unchanged['undergraduateenrollment'].min(), max_value=unchanged['undergraduateenrollment'].max(), key=3)
+  user_undergraduate_enrollment_choice = st.slider(label='Undergrad Enrollment Size', min_value=float(unchanged['undergraduateenrollment'].min()), max_value=float(unchanged['undergraduateenrollment'].max()), key=3)
   user_undergraduate_enrollment_weight = st.slider(label='Undergrad Enrollment Size Weight', min_value=0, max_value=10, key=4)
-  user_cost_preference_min_choice, user_cost_preference_max_choice = st.slider('Cost', unchanged['outofstatecost'].min(), unchanged['outofstatecost'].max(), (unchanged['outofstatecost'].min(), unchanged['outofstatecost'].max()), key=5)
+  user_cost_preference_min_choice, user_cost_preference_max_choice = st.slider('Cost', float(unchanged['outofstatecost'].min()), float(unchanged['outofstatecost'].max()), (float(unchanged['outofstatecost'].min()), float(unchanged['outofstatecost'].max())), key=5)
   user_cost_weight = st.slider(label='Cost Weight', min_value=0, max_value=10, key=6)
   user_location_choice = st.selectbox("Select Region", options=places.keys())
   user_location_weight = st.slider(label='Location Weight', min_value=0, max_value=10, key=7)
   user_major_choice = st.text_input("Major Preference")
-  user_acceptance_rate_choice = st.slider(label='Acceptance Rate', min_value=unchanged['acceptancerate'].min(), max_value=unchanged['acceptancerate'].max(), key=8)
+  user_acceptance_rate_choice = st.slider(label='Acceptance Rate', min_value=float(unchanged['acceptancerate'].min()), max_value=float(unchanged['acceptancerate'].max()), key=8)
   user_acceptance_rate_weight = st.slider(label='Acceptance Rate Weight', min_value=0, max_value=10, key=9)
   
   submitted2 = st.form_submit_button('Submit')
