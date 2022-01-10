@@ -1,10 +1,6 @@
 import pandas as pd
 import streamlit as st
 import numpy as np
-import os
-
-print(os.getcwd())
-
 
 places = {
   'pacific west': (41.852892, -117.15689),
@@ -35,12 +31,8 @@ user_acceptance_rate_weight = 2
 
 user_major_choice = 'Biology'
 
-
-#unchanged = pd.read_csv(os.getcwd() + "/college_db.csv", sep='delimiter', header=None)
-#changed = pd.read_csv(os.getcwd() + "/college_db.csv", sep='delimiter', header=None)
-
-unchanged = pd.read_csv("college_db.csv", sep='delimiter', header=None)
-changed = pd.read_csv("college_db.csv", sep='delimiter', header=None)
+unchanged = pd.read_csv("/Users/patroklos/college_app/college database - Sheet1 (18).csv")
+changed = pd.read_csv("/Users/patroklos/college_app/college database - Sheet1 (18).csv")
 
 
 changed = changed.drop(labels=['in state cost', '1st industry', '2nd industry','3rd industry', '4th industry', '5th industry', 'median earning wages', 'retention rate', 'student to faculty ratio'], axis=1)
@@ -66,9 +58,8 @@ with st.form('CollegeForm'):
   user_undergraduate_enrollment_weight = st.slider(label='Undergrad Enrollment Size Weight', min_value=0, max_value=10, key=4)
   user_cost_preference_min_choice, user_cost_preference_max_choice = st.slider('Cost', unchanged['outofstatecost'].min(), unchanged['outofstatecost'].max(), (unchanged['outofstatecost'].min(), unchanged['outofstatecost'].max()), key=5)
   user_cost_weight = st.slider(label='Cost Weight', min_value=0, max_value=10, key=6)
-  #user_location_choice = st.selectbox("Select State", options=stateslist) 
   user_location_choice = st.selectbox("Select Region", options=places.keys())
-  user_location_weight = st.slider(label='ACT Weight', min_value=0, max_value=10, key=7)
+  user_location_weight = st.slider(label='Location Weight', min_value=0, max_value=10, key=7)
   user_major_choice = st.text_input("Major Preference")
   user_acceptance_rate_choice = st.slider(label='Acceptance Rate', min_value=unchanged['acceptancerate'].min(), max_value=unchanged['acceptancerate'].max(), key=8)
   user_acceptance_rate_weight = st.slider(label='Acceptance Rate Weight', min_value=0, max_value=10, key=9)
@@ -87,9 +78,9 @@ if submitted2:
                                         other=10000/changed["undergraduateenrollment"], inplace=True)
   changed["undergraduateenrollment"]=changed["undergraduateenrollment"]*100
 
-  # changed["averageact"].where(~(changed.averageact <= user_act_score), 
+  # changed["averageact"].where(~(changed.averageact <= user_act_score),
   #                                       other=100, inplace=True)
-  # changed["averageact"].where(~(changed.averageact != 100), 
+  # changed["averageact"].where(~(changed.averageact != 100),
   #                                       other=changed["averageact"]/user_act_score, inplace=True)
   changed["averageact"].where(~(changed.averageact <= user_act_score), 
                                     other=100, inplace=True)
@@ -97,11 +88,11 @@ if submitted2:
                                     other=(user_act_score/changed["averageact"])*100, inplace=True)
 
 
-  # changed["outofstatecost"].where(~(changed.outofstatecost <= user_cost_preference_min_choice), 
+  # changed["outofstatecost"].where(~(changed.outofstatecost <= user_cost_preference_min_choice),
   #                                       other=0, inplace=True)
-  # changed["outofstatecost"].where(~(changed.outofstatecost >= user_cost_preference_max_choice), 
+  # changed["outofstatecost"].where(~(changed.outofstatecost >= user_cost_preference_max_choice),
   #                                       other=0, inplace=True)
-  # changed["outofstatecost"].where(~(changed.outofstatecost != 0), 
+  # changed["outofstatecost"].where(~(changed.outofstatecost != 0),
   #                                       other=100, inplace=True)
 
   changed["outofstatecost"].where(~(unchanged.outofstatecost <= user_cost_preference_min_choice),
@@ -157,6 +148,8 @@ if submitted2:
 
   final_df["pointscolumn"] = final_df['outofstatecost'] + final_df['averageact'] + final_df['undergraduateenrollment'] + final_df['distance'] + final_df['acceptancerate']
   final_df.sort_values(["pointscolumn"], axis=0, ascending=[False], inplace=True)
-  st.write(final_df)
+  
+  user_colleges = final_df['name']
+  st.write(user_colleges)
  
 
